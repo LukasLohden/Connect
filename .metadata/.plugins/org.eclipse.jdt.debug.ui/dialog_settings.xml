@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.jdt.debug.ui.MAIN_METHOD_SELECTION_DIALOG">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode&gt;=ConnectAI/src&amp;lt;main.java.connectK{ConnectKGUI.java[ConnectKGUI&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=Connect/\/Users\/Lukas\/Downloads\/ConnectK-FQ2016_STABLE\/ConnectKSource_java\/Libs\/ConnectK_1.8.jar&amp;lt;connectK(ConnectKGUI.class[ConnectKGUI&lt;/infoNode&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="980" key="DIALOG_X_ORIGIN"/>
+			<item value="373" key="DIALOG_Y_ORIGIN"/>
+		</section>
+	</section>
+</section>

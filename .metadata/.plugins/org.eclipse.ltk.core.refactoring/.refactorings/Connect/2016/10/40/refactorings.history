@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;DummyAI.java&apos; to &apos;FrAInkenstienAI.java&apos;&#x0A;- Original project: &apos;Connect&apos;&#x0A;- Original element: &apos;DummyAI.java&apos;&#x0A;- Renamed element: &apos;FrAInkenstienAI.java&apos;" description="Rename compilation unit &apos;DummyAI.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{DummyAI.java" name="FrAInkenstienAI.java" references="false" stamp="1475284651611" version="1.0"/>
+</session>
