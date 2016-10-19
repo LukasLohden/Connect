@@ -1,0 +1,21 @@
+/* FrAInkenstein AI - CS 171 Prject Fall 2016
+ * FrAInkensteinNode defines nodes for representing
+ * game states in a tree.
+ */
+
+import connectK.BoardModel;
+
+public class FrAInkensteinNode
+{
+	private FrAInkensteinNode children[]; // All of this node's children
+	private int best; // Index of best child (so far)
+	private boolean gravity; // True if playing with gravity ON
+	/*private*/ BoardModel state;
+	
+	public FrAInkensteinNode(BoardModel gameState, boolean gravityOn)
+	{
+		state = gameState;
+		gravity = gravityOn;
+		best = 0;
+	}
+}

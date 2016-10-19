@@ -36,6 +36,8 @@
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="/Users/Lukas/Downloads/ConnectK-FQ2016_STABLE/ConnectKSource_java/src/main/java/connectK"/>
+			<item value="/Users/Lukas/Downloads/CherrimAI-master"/>
 			<item value="/Users/Lukas/Downloads/connect-k-master/src"/>
 			<item value="/Users/Lukas/Downloads/ConnectK-FQ2016_STABLE/ConnectKSource_java"/>
 		</list>

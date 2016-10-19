@@ -1,0 +1,43 @@
+import connectK.CKPlayer;
+import connectK.BoardModel;
+
+import java.awt.Point;
+import java.lang.Math;
+
+
+public class FrAInkenstienAI extends CKPlayer {
+
+	public FrAInkenstienAI(byte player, BoardModel state) 
+	{
+		super(player, state);
+		teamName = "FrAInkenstein";
+	}
+
+	@Override
+	public Point getMove(BoardModel state) 
+	{
+		return getMove(state, 5000);	
+	}
+
+	@Override
+	public Point getMove(BoardModel state, int deadline) 
+	{
+		double safeDeadline = deadline * 0.9;
+		long moveTime = System.currentTimeMillis();
+		Point nextMove = null;
+		int depth = 1;
+		
+		
+		
+		return getMove(state); // Temporary
+	}
+	
+	public int heuristic(BoardModel state)
+	{
+		
+		return 0;
+	}
+	
+	
+	
+}

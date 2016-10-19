@@ -8,5 +8,10 @@
     "location": "/Users/Lukas/Documents/ICS 171 AI Project/Connect/Libs/ConnectK_1.8.jar",
     "status": "UNRESOLVED",
     "error": "No call model found for \u0027/Users/Lukas/Documents/ICS 171 AI Project/Connect/Libs/ConnectK_1.8.jar\u0027. Neither fingerprint \u0027aae4ec6f71531843c18c57bf43a2348e8be4a18f\u0027 nor symbolic name \u0027org.slf4j.slf4j-simple\u0027 are known."
+  },
+  "/Users/Lukas/Documents/ICS 171 AI Project/Connect/Connect/src": {
+    "location": "/Users/Lukas/Documents/ICS 171 AI Project/Connect/Connect/src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027/Users/Lukas/Documents/ICS 171 AI Project/Connect/Connect/src\u0027. Skipped."
   }
 }
