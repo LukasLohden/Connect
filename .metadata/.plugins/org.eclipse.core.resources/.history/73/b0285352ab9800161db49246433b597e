@@ -42,7 +42,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		while (System.currentTimeMillis() < stop_time)
 		{
-			expandTree(tree, depth_limit, stop_time);
+			expandNode(tree, true, depth_limit, stop_time);
 			if (System.currentTimeMillis() < stop_time)
 			{
 				minmaxSearch(tree, depth_limit, stop_time);
@@ -66,12 +66,7 @@ public class FrAInkenstienAI extends CKPlayer {
 	}
 	private void minmaxSearch(FrAInkensteinNode node, int depth, long stop_time)
 	{
-		 if (System.currentTimeMillis() > stop_time)
-		 {
-			 return;
-		 }
-		 
-		 
+		 // Assign heuristic values to children of node recursively
 	}
 	
 	private int max(BoardModel state)
@@ -110,7 +105,6 @@ public class FrAInkenstienAI extends CKPlayer {
 		return ai_score - op_score;
 	}
 	
-	// Currently only counts how many k-length strings that start from given position.
 	private int score(BoardModel state, int row, int col)
 	{
 		int tally = 0;
@@ -127,30 +121,11 @@ public class FrAInkenstienAI extends CKPlayer {
 		return tally;
 	}
 	
-	// Currently only determines if a winning k-string could be started from this position.
-	private int search(BoardModel state, int row, int col, int row_change, int col_change)
+	private int search(BoardModel state,int row, int col, int row_change, int col_change)
 	{
 		int distance = 0;
 		
-		row = row + row_change;
-		col = col + col_change;
-		
-		while ( (0<=row) && (row <= state.getHeight()) && (0<=col) && (col <= state.getWidth()) )
-		{
-			if (state.getSpace(row, col) == opponent)
-			{
-				return 0;
-			}
-			if (state.getSpace(row, col) == ai_player)
-			{
-				distance += 1;
-			}
-			
-			if (distance == state.getkLength())
-			{
-				return 1;
-			}
-		}
+		while ( (0<=row<=state.getHeight()) && (0 <=col<=state.getWidth()))
 		
 		return 0;
 	}
@@ -171,24 +146,15 @@ public class FrAInkenstienAI extends CKPlayer {
 		return null;
 	}
 	
-	private void expandTree(FrAInkensteinNode node, int depth_limit, long stop_time)
+	private void expandNode(FrAInkensteinNode node, boolean maximize, int depthLimit, long stopTime)
 	{
-		if (System.currentTimeMillis() > stop_time)
-		 {
-			 return;
-		 }
+		if (depthLimit == 0)
+		{
+			if (maximize) // do I need maximize?
+			{
+				// Add children to the node left to right.
+				// Set next state to opponent's turn and recur to calculate deeper
+			}
+		}
 	}
-	
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

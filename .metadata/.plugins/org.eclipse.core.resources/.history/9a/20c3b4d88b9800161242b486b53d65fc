@@ -4,6 +4,7 @@
  */
 
 import connectK.BoardModel;
+import FrAInkensteinEvaluator;
 
 public class FrAInkensteinNode
 {

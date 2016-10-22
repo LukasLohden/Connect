@@ -5,6 +5,7 @@
 
 import connectK.BoardModel;
 
+
 public class FrAInkensteinNode
 {
 	private FrAInkensteinNode[] children; // All of this node's children

@@ -10,7 +10,6 @@ public class FrAInkensteinNode
 	private FrAInkensteinNode[] children; // All of this node's children
 	private int best; // Index of best child (so far)
 	private boolean gravity; // True if playing with gravity ON
-	private int value; // The heuristic value of this state's board
 	/*private*/ BoardModel state;
 	
 	public FrAInkensteinNode(BoardModel gameState)
@@ -18,7 +17,6 @@ public class FrAInkensteinNode
 		state = gameState;
 		gravity = state.gravity;
 		best = 0;
-		value = 0;
 		
 		if (!gravity)
 		{
@@ -28,13 +26,6 @@ public class FrAInkensteinNode
 		{
 			children = new FrAInkensteinNode[state.width];
 		}
-	}
-	
-	// GET METHODS:
-	
-	public int getValue()
-	{
-		return value;
 	}
 	
 	public int getBest()
@@ -52,25 +43,13 @@ public class FrAInkensteinNode
 		return state;
 	}
 	
-	// ACTION METHODS:
-	
-	public void setValue(int new_value)
-	{
-		value = new_value;
-	}
-	
-	public void setBest(int new_best)
-	{
-		best = new_best;
-	}
-	
-	public void addChild (FrAInkensteinNode new_child)
+	public void addChild (FrAInkensteinNode child)
 	{
 		for (int i = 0; i < children.length; i++)
 		{
 			if (children[i] == null)
 			{
-				children[i] = new_child;
+				children[i] = child;
 			}
 		}
 	}
