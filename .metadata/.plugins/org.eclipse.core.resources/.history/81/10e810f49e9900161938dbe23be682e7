@@ -1,0 +1,326 @@
+import connectK.CKPlayer;
+import connectK.BoardModel;
+
+import java.awt.Point;
+
+
+public class FrAInkenstienAI extends CKPlayer {
+
+	int depth_limit;
+	int opponent;
+	int ai_player;
+	
+	public FrAInkenstienAI(byte player, BoardModel state) 
+	{
+		super(player, state);
+		teamName = "FrAInkenstein";
+		depth_limit = state.gravityEnabled() ? 3 : 2;
+		ai_player = player;
+		
+		if (player == 1)
+		{
+			opponent = 2;
+		}
+		else
+		{
+			opponent = 1;
+		}
+	}
+
+	@Override
+	public Point getMove(BoardModel state) 
+	{
+		return getMove(state, 5000);	
+	}
+
+	@Override
+	public Point getMove(BoardModel state, int deadline) 
+	{
+		long stop_time = System.currentTimeMillis() + deadline;
+		
+		FrAInkensteinNode tree = new FrAInkensteinNode(state);
+		FrAInkensteinNode best_node = tree;
+		
+		// while (System.currentTimeMillis() < stop_time)
+		
+		expandTree(tree, 0, stop_time, ai_player);
+		//tree.printTree(tree, 0, 3);
+		
+		//if (System.currentTimeMillis() < stop_time)
+		
+		// if (System.currentTimeMillis() < stop_time)
+		
+		// best_node = tree.getChildren()[tree.getBest()];
+		
+		// depth_limit++;
+		
+		return findMove(state, minmaxSearch(tree, stop_time).getState());
+	}
+	
+	private void expandTree(FrAInkensteinNode node, int depth, long stop_time, int current_player)
+	{
+		// if (System.currentTimeMillis() > stop_time)
+		
+		//System.out.println("EXPANDING AT DEPTH: " + depth);
+		
+		//System.out.println(node.getState());
+		
+		
+		if (node.getState().gravityEnabled())
+		{
+			for (int col = 0; col < node.getState().getWidth(); col++)
+			{
+				// if column has spaces left, play in top of column
+					// call expandTree on the new node from above play
+						// continue until I reach the max depth
+				
+				if ( (node.getState().getSpace(col, node.getState().getHeight()-1)) == 0 )
+				{
+					BoardModel new_board = node.getState().clone();
+					new_board = new_board.placePiece(new Point (col, node.getState().getHeight()-1), (byte) current_player);
+					FrAInkensteinNode new_node = new FrAInkensteinNode(new_board);
+					node.addChild(new_node);
+					if (depth < depth_limit)
+					{
+						expandTree(new_node, depth + 1, stop_time, (current_player == 1) ? 2 : 1);
+					}
+				}
+			}
+		}
+		
+		else
+		{
+			// gravity not enabled: play in every open slot in the board
+				// call expandTree on the new node from above play
+					// continue until I reach the max depth
+			
+			for (int row = 0; row < node.getState().getHeight(); row++)
+			{
+				for (int col = 0; col < node.getState().getWidth(); col++)
+				{
+					if (node.state.getSpace(col, row) == 0)
+					{
+						BoardModel new_board = node.getState().clone();
+						new_board = new_board.placePiece(new Point (col, row), (byte) current_player);
+						
+						
+						//BoardModel new_board = node.getState().placePiece(new Point (col, row), (byte) current_player);
+						FrAInkensteinNode new_node = new FrAInkensteinNode(new_board);
+						
+//						for (int i = new_node.getState().getHeight()-1; i > -1; i--)
+//						{
+//							for (int j = new_node.getState().getWidth()-1; j > -1; j--)
+//							{
+//								System.out.print(new_node.getState().getSpace(j, i));
+//							}
+//							System.out.println();
+//						}
+//						System.out.println();
+						
+						node.addChild(new_node);
+						//System.out.println("ADDED CHILD!");
+						
+						if (depth < depth_limit)
+						{
+							expandTree(new_node, depth + 1, stop_time, (current_player == 1) ? 2 : 1);
+						}	
+					}
+				}
+			}
+		}
+	}
+	
+	private boolean terminal(BoardModel state)
+	{
+		return (heuristic(state) == Integer.MAX_VALUE || heuristic(state) == Integer.MIN_VALUE);
+	}
+	
+	private FrAInkensteinNode minmaxSearch(FrAInkensteinNode node, long stop_time)
+	{
+		
+		int best_index = 0;
+		int best_value = Integer.MIN_VALUE;
+		for (int child = 0; child < node.getChildren().length; child++)
+		{
+			int child_value = minValue(node.getChildren()[child], 0);
+			if (child_value >= best_value)
+			{
+				best_value = child_value;
+				best_index = child;
+			}
+		}
+		 return node.getChildren()[best_index];
+	}
+	
+	private int maxValue(FrAInkensteinNode node, int depth)
+	{
+		// THIS IS WEIRD
+		if(node == null)
+		{
+			return 0;
+		}
+		
+		if (depth == depth_limit)
+		{
+			return heuristic(node.getState());
+		}
+		
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
+		
+		int max_val = Integer.MIN_VALUE;
+		
+		for (int child = 0; child < node.getChildren().length; child++)
+		{
+			int child_value = minValue(node.getChildren()[child], 0);
+			if (child_value >= max_val)
+			{
+				max_val = child_value;
+				max_val = child;
+			}
+		}
+		return max_val;
+	}
+	
+	private int minValue(FrAInkensteinNode node, int depth)
+	{
+		// THIS IS WEIRD
+		if(node == null)
+		{
+			return 0;
+		}
+		
+		if (depth == depth_limit)
+		{
+			return heuristic(node.getState());
+		}
+		
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
+		
+		int min_val = Integer.MAX_VALUE;
+		
+		for (int child = 0; child < node.getChildren().length; child++)
+		{
+			int child_value = maxValue(node.getChildren()[child], 0);
+			if (child_value <= min_val)
+			{
+				min_val = child_value;
+				min_val = child;
+			}
+		}
+		
+		return min_val;
+	}
+	
+	private Point findMove(BoardModel state1, BoardModel state2)
+	{
+		for (int row = 0; row < state1.getHeight(); row++)
+		{
+			for (int col = 0; col < state1.getWidth(); col++)
+			{
+				if (state1.getSpace(col, row) != state2.getSpace(col, row))
+				{
+					return new Point(col, row);
+				}
+			}
+		}
+		return null;
+	}
+	
+	private int heuristic(BoardModel state)
+	{
+		int ai_score = 0; 
+		int op_score = 0;
+		
+		for (int row = 0; row < state.getHeight(); row++)
+		{
+			for (int col = 0; col < state.getWidth(); col++)
+			{
+				if (state.getSpace(col, row) == ai_player)
+				{
+					ai_score += score(state, row, col, ai_player);
+				}
+				if (state.getSpace(col, row) == opponent)
+				{
+					op_score += score(state, row, col, opponent);
+				}
+			}
+		}
+		
+		System.out.println("AI: " + ai_score + " OPPONENT: " + op_score);
+		return ai_score - op_score;
+	}
+	
+	// Currently only counts how many k-length strings that start from given position.
+	private int score(BoardModel state, int row, int col, int current_player)
+	{
+		int tally = 0;
+		
+		// Search in each direction for a win
+		tally += search(state, current_player, row, col, 1, 0);
+		tally += search(state, current_player, row, col, 1, 1);
+		tally += search(state, current_player, row, col, 0, 1);
+		tally += search(state, current_player, row, col, -1, 1);
+		tally += search(state, current_player, row, col, -1, 0);
+		tally += search(state, current_player, row, col, -1, -1);
+		tally += search(state, current_player, row, col, 0, -1);
+		tally += search(state, current_player, row, col, 1, -1);
+		
+		return tally;
+	}
+	
+	// Currently only determines if a winning k-string could be started from this position.
+	// And weighs that score based on how many complete that string is.
+	private int search(BoardModel state, int row, int col, int row_change, int col_change, int current_player)
+	{
+		int distance = 0; 	// Keeps track of distance searched to determine valid win string
+		int score = 0;		// Counts number of pieces found in win-string to weight score
+		
+		row = row + row_change;
+		col = col + col_change;
+		
+		while ( (0<=row) && (row <= state.getHeight()) && (0<=col) && (col <= state.getWidth()) )
+		{
+			if (state.getSpace(row, col) == current_player)
+			{
+				System.out.println("Incrementing " + current_player + " Score +1.");
+				score += 1;
+			}
+			if (state.getSpace(row, col) != current_player && state.getSpace(row, col) != 0)
+			{
+				return 0;
+			}
+			
+			distance += 1;
+			
+			if (distance == state.getkLength() - 1)
+			{
+				if (score == state.getkLength() - 1)
+				{
+					System.out.println("Found win condition for " + current_player);
+					score = 1000*state.getkLength();
+				}
+				return score;
+			}
+		}
+		return 0;
+	}
+
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

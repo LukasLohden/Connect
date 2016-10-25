@@ -1,4 +1,4 @@
-/* FrAInkenstein AI - CS 171 Prject Fall 2016
+/* FrAInkenstein AI - CS 171 Project Fall 2016
  * FrAInkensteinNode defines nodes for representing
  * game states in a tree.
  */
@@ -8,19 +8,18 @@ import connectK.BoardModel;
 public class FrAInkensteinNode
 {
 	private FrAInkensteinNode[] children; // All of this node's children
-	private int best; // Index of best child (so far)
-	private boolean gravity; // True if playing with gravity ON
 	private int value; // The heuristic value of this state's board
 	/*private*/ BoardModel state;
 	
-	public FrAInkensteinNode(BoardModel gameState)
+	private boolean maximize;
+	private int current_player;
+	
+	public FrAInkensteinNode(BoardModel state)
 	{
-		state = gameState;
-		gravity = state.gravity;
-		best = 0;
 		value = 0;
+		this.state = state;
 		
-		if (!gravity)
+		if (!state.gravityEnabled())
 		{
 			children = new FrAInkensteinNode[state.spacesLeft];
 		}
@@ -32,14 +31,19 @@ public class FrAInkensteinNode
 	
 	// GET METHODS:
 	
+	public int getPlayer()
+	{
+		return current_player;
+	}
+	
+	public boolean maxEnabled()
+	{
+		return maximize;
+	}
+	
 	public int getValue()
 	{
 		return value;
-	}
-	
-	public int getBest()
-	{
-		return best;
 	}
 	
 	public FrAInkensteinNode[] getChildren()
@@ -59,11 +63,6 @@ public class FrAInkensteinNode
 		value = new_value;
 	}
 	
-	public void setBest(int new_best)
-	{
-		best = new_best;
-	}
-	
 	public void addChild (FrAInkensteinNode new_child)
 	{
 		for (int i = 0; i < children.length; i++)
@@ -74,4 +73,31 @@ public class FrAInkensteinNode
 			}
 		}
 	}
+	
+	public void printTree(FrAInkensteinNode node, int depth, int depth_limit)
+	{
+		System.out.println("-----------------------");
+		for (FrAInkensteinNode child: node.children)
+		{
+			if (node == null)
+			{
+				System.out.println("NULL NODE");
+			}
+			for (int col = node.state.getHeight()-1; col > -1; col--)
+			{
+				for (int row = node.state.getWidth()-1; row > -1; row--)
+				{
+					System.out.print(node.state.getSpace(row, col));
+				}
+				System.out.println();
+			}
+			System.out.println();
+			if (depth < depth_limit)
+			{
+				printTree(node, depth+1, depth_limit);
+			}
+		}
+	}
+	
 }
+	

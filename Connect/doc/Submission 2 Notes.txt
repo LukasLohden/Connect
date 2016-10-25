@@ -1,0 +1,5 @@
+FrAInkensteinAI
+
+Completed creating a tree and doing a min-max search.
+
+AI plays in first lower-left corner for some (currently) unknown reason. Something seems to be going wrong with the the heuristic that is causing all the values to be the same. I was not able to pinpoint the issue in time.

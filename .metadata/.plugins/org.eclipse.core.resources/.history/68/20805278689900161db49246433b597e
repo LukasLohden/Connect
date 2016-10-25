@@ -1,0 +1,147 @@
+/* FrAInkenstein AI - CS 171 Prject Fall 2016
+ * FrAInkensteinNode defines nodes for representing
+ * game states in a tree.
+ */
+
+import connectK.BoardModel;
+
+public class FrAInkensteinNode
+{
+	private FrAInkensteinNode[] children; // All of this node's children
+	private boolean gravity; // True if playing with gravity ON
+	private int value; // The heuristic value of this state's board
+	private int player;
+	private int opponent;
+	/*private*/ BoardModel state;
+	
+	public FrAInkensteinNode(BoardModel state, int player)
+	{
+		gravity = state.gravityEnabled();
+		opponent = (player == 1) ? 2 : 1;
+		value = heuristic(state);
+		
+		if (!gravity)
+		{
+			children = new FrAInkensteinNode[state.spacesLeft];
+		}
+		else
+		{
+			children = new FrAInkensteinNode[state.width];
+		}
+	}
+	
+	// GET METHODS:
+	
+	public int getValue()
+	{
+		return value;
+	}
+	
+	public FrAInkensteinNode[] getChildren()
+	{
+		return children;
+	}
+	
+	public BoardModel getState()
+	{
+		return state;
+	}
+	
+	// ACTION METHODS:
+	
+	public void setValue(int new_value)
+	{
+		value = new_value;
+	}
+	
+	public void addChild (FrAInkensteinNode new_child)
+	{
+		for (int i = 0; i < children.length; i++)
+		{
+			if (children[i] == null)
+			{
+				children[i] = new_child;
+			}
+		}
+	}
+	
+	// HEURISTIC
+	
+	private int heuristic(BoardModel state)
+	{
+		int ai_score = 0; // The AI's score
+		int op_score = 0; // The opponent's score
+		
+		for (int row = 0; row < state.getHeight(); row++)
+		{
+			for (int col = 0; col < state.getWidth(); col++)
+			{
+				if (state.getSpace(col, row) == player)
+				{
+					ai_score += score(state, col, row);
+				}
+				if (state.getSpace(col, row) == opponent)
+				{
+					op_score += score(state, col, row);
+				}
+			}
+		}
+		
+		return ai_score - op_score;
+	}
+	
+	// Currently only counts how many k-length strings that start from given position.
+	private int score(BoardModel state, int row, int col)
+	{
+		int tally = 0;
+		
+		// Search in each direction for a win
+		tally += search(state, row, col, 1, 0);
+		tally += search(state, row, col, 1, 1);
+		tally += search(state, row, col, 0, 1);
+		tally += search(state, row, col, -1, 1);
+		tally += search(state, row, col, -1, 0);
+		tally += search(state, row, col, -1, -1);
+		tally += search(state, row, col, 0, -1);
+		tally += search(state, row, col, 1, -1);
+		
+		return tally;
+	}
+	
+	// Currently only determines if a winning k-string could be started from this position.
+	// And weighs that score based on how many complete that string is.
+	private int search(BoardModel state, int row, int col, int row_change, int col_change)
+	{
+		int distance = 0; 	// Keeps track of distance searched to determine valid win string
+		int score = 0;		// Counts number of pieces found in win-string to weight score
+		
+		row = row + row_change;
+		col = col + col_change;
+		
+		while ( (0<=row) && (row <= state.getHeight()) && (0<=col) && (col <= state.getWidth()) )
+		{
+			if (state.getSpace(col, row) == opponent)
+			{
+				return 0;
+			}
+			if (state.getSpace(col, row) == player)
+			{
+				score += 1;
+			}
+			
+			distance += 1;
+			
+			if (distance == state.getkLength() - 1)
+			{
+				if (score == state.getkLength() - 1)
+				{
+					score = Integer.MAX_VALUE;
+				}
+				return score;
+			}
+		}
+		
+		return 0;
+	}
+	
+}
