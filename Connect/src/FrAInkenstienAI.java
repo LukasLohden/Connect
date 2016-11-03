@@ -2,6 +2,8 @@ import connectK.CKPlayer;
 import connectK.BoardModel;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FrAInkenstienAI extends CKPlayer {
@@ -41,20 +43,13 @@ public class FrAInkenstienAI extends CKPlayer {
 		FrAInkensteinNode tree = new FrAInkensteinNode(state);
 		FrAInkensteinNode best_node = tree;
 		
-		// while (System.currentTimeMillis() < stop_time)
-		
 		expandTree(tree, 0, stop_time, ai_player);
 		//tree.printTree(tree, 0, 3);
 		
-		//if (System.currentTimeMillis() < stop_time)
+		//BoardModel next_state = minmaxSearch(tree, stop_time).getState();
+		BoardModel next_state = alphabetaSearch(tree, stop_time).getState();
 		
-		// if (System.currentTimeMillis() < stop_time)
-		
-		// best_node = tree.getChildren()[tree.getBest()];
-		
-		// depth_limit++;
-		
-		return findMove(state, minmaxSearch(tree, stop_time).getState());
+		return findMove(state, next_state);
 	}
 	
 	private void expandTree(FrAInkensteinNode node, int depth, long stop_time, int current_player)
@@ -103,22 +98,10 @@ public class FrAInkenstienAI extends CKPlayer {
 						BoardModel new_board = node.getState().clone();
 						new_board = new_board.placePiece(new Point (col, row), (byte) current_player);
 						
-						
 						//BoardModel new_board = node.getState().placePiece(new Point (col, row), (byte) current_player);
 						FrAInkensteinNode new_node = new FrAInkensteinNode(new_board);
 						
-//						for (int i = new_node.getState().getHeight()-1; i > -1; i--)
-//						{
-//							for (int j = new_node.getState().getWidth()-1; j > -1; j--)
-//							{
-//								System.out.print(new_node.getState().getSpace(j, i));
-//							}
-//							System.out.println();
-//						}
-//						System.out.println();
-						
 						node.addChild(new_node);
-						//System.out.println("ADDED CHILD!");
 						
 						if (depth < depth_limit)
 						{
@@ -135,31 +118,30 @@ public class FrAInkenstienAI extends CKPlayer {
 		return (heuristic(state) == Integer.MAX_VALUE || heuristic(state) == Integer.MIN_VALUE);
 	}
 	
-	private FrAInkensteinNode minmaxSearch(FrAInkensteinNode node, long stop_time)
+	private FrAInkensteinNode alphabetaSearch(FrAInkensteinNode node, long stop_time)
 	{
+		int alpha = Integer.MIN_VALUE;
+		int beta = Integer.MAX_VALUE;
 		
 		int best_index = 0;
 		int best_value = Integer.MIN_VALUE;
+		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			int child_value = minValue(node.getChildren()[child], 0);
+			int child_value = ABminValue(node.getChildren()[child], alpha, beta, 0);
+			node.getChildren()[child].setValue(child_value);
+			alpha = child_value;
 			if (child_value >= best_value)
 			{
 				best_value = child_value;
 				best_index = child;
 			}
 		}
-		 return node.getChildren()[best_index];
+		return node.getChildren()[best_index];
 	}
 	
-	private int maxValue(FrAInkensteinNode node, int depth)
+	private int ABmaxValue (FrAInkensteinNode node, int alpha, int beta, int depth)
 	{
-		// THIS IS WEIRD
-		if(node == null)
-		{
-			return 0;
-		}
-		
 		if (depth == depth_limit)
 		{
 			return heuristic(node.getState());
@@ -174,7 +156,99 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
+			int child_value = ABminValue(node.getChildren()[child], alpha, beta, depth + 1);
+			if (child_value >= max_val)
+			{
+				max_val = child_value;
+				max_val = child;
+			}
+			if (alpha >= beta)
+			{
+				return Integer.MAX_VALUE;
+			}
+		}
+		return max_val;
+	}
+	
+	private int ABminValue (FrAInkensteinNode node, int alpha, int beta, int depth)
+	{
+		if (depth == depth_limit)
+		{
+			return heuristic(node.getState());
+		}
+		
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
+		
+		int max_val = Integer.MIN_VALUE;
+		
+		for (int child = 0; child < node.getChildren().length; child++)
+		{
+			int child_value = ABmaxValue(node.getChildren()[child], alpha, beta, depth + 1);
+			if (child_value >= max_val)
+			{
+				max_val = child_value;
+				max_val = child;
+			}
+			if (alpha >= beta)
+			{
+				return Integer.MIN_VALUE;
+			}
+		}
+		return max_val;
+	}
+	
+	private FrAInkensteinNode minmaxSearch(FrAInkensteinNode node, long stop_time)
+	{
+		int best_index = 0;
+		int best_value = Integer.MIN_VALUE;
+		//System.out.println("CHILD VALUES: ");
+		for (int child = 0; child < node.getChildren().length; child++)
+		{
 			int child_value = minValue(node.getChildren()[child], 0);
+			node.getChildren()[child].setValue(child_value);
+			//System.out.print(child_value + " (index: " + child+ "), ");
+			if (child_value >= best_value)
+			{
+				//System.out.print("Updating best_value. Was: " + best_value + " Now: " + child_value);
+				best_value = child_value;
+				best_index = child;
+				
+			}
+			//System.out.println();
+		}
+//		System.out.println("Best Value: " + best_value + " At index: " + best_index);
+//		System.out.print("Children Values: ");
+//		for (int child = 0; child < node.getChildren().length; child++)
+//		{
+//			System.out.print(node.getChildren()[child].getValue() + ", ");
+//		}
+//		System.out.println();
+		 return node.getChildren()[best_index];
+	}
+	
+	private int maxValue(FrAInkensteinNode node, int depth)
+	{
+		
+		if (depth == depth_limit)
+		{
+			//System.out.println("DEPTH REACHED(MAX): " + heuristic(node.getState()));
+			return heuristic(node.getState());
+		}
+		
+		if (terminal(node.getState()))
+		{
+			//System.out.println("TERMINAL(MAX): " + heuristic(node.getState()));
+			return heuristic(node.getState());
+		}
+		
+		int max_val = Integer.MIN_VALUE;
+		
+		for (int child = 0; child < node.getChildren().length; child++)
+		{
+			int child_value = minValue(node.getChildren()[child], depth + 1);
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
@@ -186,19 +260,17 @@ public class FrAInkenstienAI extends CKPlayer {
 	
 	private int minValue(FrAInkensteinNode node, int depth)
 	{
-		// THIS IS WEIRD
-		if(node == null)
-		{
-			return 0;
-		}
 		
 		if (depth == depth_limit)
 		{
+			//System.out.println("DEPTH REACHED(MIN): " + heuristic(node.getState()));
+			//System.out.println("HEURISTIC SCORE: " + heuristic(node.getState()) + " at depth: " + depth);
 			return heuristic(node.getState());
 		}
 		
 		if (terminal(node.getState()))
 		{
+			//System.out.println("TERMINAL(MIN): " + heuristic(node.getState()));
 			return heuristic(node.getState());
 		}
 		
@@ -206,7 +278,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			int child_value = maxValue(node.getChildren()[child], 0);
+			int child_value = maxValue(node.getChildren()[child], depth + 1);
 			if (child_value <= min_val)
 			{
 				min_val = child_value;
@@ -237,6 +309,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		int ai_score = 0; 
 		int op_score = 0;
 		
+		// Print Heuristic Valiues here V
 		for (int row = 0; row < state.getHeight(); row++)
 		{
 			for (int col = 0; col < state.getWidth(); col++)
@@ -250,77 +323,70 @@ public class FrAInkenstienAI extends CKPlayer {
 					op_score += score(state, row, col, opponent);
 				}
 			}
+			
 		}
 		
 		//System.out.println("AI: " + ai_score + " OPPONENT: " + op_score);
 		return ai_score - op_score;
 	}
 	
-	// Currently only counts how many k-length strings that start from given position.
 	private int score(BoardModel state, int row, int col, int current_player)
 	{
 		int tally = 0;
 		
-		// Search in each direction for a win
-		tally += search(state, current_player, row, col, 1, 0);
-		tally += search(state, current_player, row, col, 1, 1);
-		tally += search(state, current_player, row, col, 0, 1);
-		tally += search(state, current_player, row, col, -1, 1);
-		tally += search(state, current_player, row, col, -1, 0);
-		tally += search(state, current_player, row, col, -1, -1);
-		tally += search(state, current_player, row, col, 0, -1);
-		tally += search(state, current_player, row, col, 1, -1);
+		tally += search(state, current_player, row, col, 1, 0); 	// Horizontal
+		tally += search(state, current_player, row, col, 0, 1); 	// Vertical
+		tally += search(state, current_player, row, col, 1, 1); 	// Diagonal Up
+		tally += search(state, current_player, row, col, 1, -1);	// Diagonal Down
 		
 		return tally;
 	}
 	
-	// Currently only determines if a winning k-string could be started from this position.
-	// And weighs that score based on how many complete that string is.
 	private int search(BoardModel state, int current_player, int row, int col, int row_change, int col_change)
 	{
-		int distance = 0; 	// Keeps track of distance searched to determine valid win string
-		int score = 1;		// Counts number of pieces found in win-string to weight score
+		List<Integer> search_list = new ArrayList<Integer>();
+		int start_row = row;
+		int start_col = col;
 		
-		row = row + row_change;
-		col = col + col_change;
-		
-//		for (int i = state.getHeight()-1; i > -1; i--)
-//		{
-//			for (int j = state.getWidth()-1; j > -1; j--)
-//			{
-//				System.out.print(state.getSpace(j, i));
-//			}
-//			System.out.println();
-//		}
-//		System.out.println();
-		
-		while ( (0<=row) && (row < state.getHeight()) && (0<=col) && (col < state.getWidth()) )
+		// Positive Search
+		while ( (0 <= row+row_change) && (row+row_change < state.getHeight()) && (0 <= col+col_change) && (col+col_change < state.getWidth()) 
+				&&  (state.getSpace(col+col_change, row+row_change) != ((current_player == 1) ? 2 : 1) ) )
 		{
-			if (state.getSpace(col, row) == current_player)
-			{
-				//System.out.println("Incrementing " + current_player + " Score +1.");
-				score += 1;
-			}
-			if (state.getSpace(col, row) != current_player && state.getSpace(col, row) != 0)
-			{
-				return 0;
-			}
+			row = row+row_change;
+			col = col+col_change;
 			
-			distance += 1;
+			search_list.add( (int)state.getSpace(col, row) );
+		}
+		row = start_row;
+		col = start_col;
+		// Negative Search
+		while ( (0 <= row-row_change) && (row-row_change < state.getHeight()) && (0 <= col-col_change) && (col-col_change < state.getWidth())
+				&&  (state.getSpace(col-col_change, row-row_change) != ((current_player == 1) ? 2 : 1) ) )
+		{
+			row = row-row_change;
+			col = col-col_change;
 			
-			if (distance == state.getkLength() - 1)
+			search_list.add( (int)state.getSpace(col, row) );
+		}
+		
+		int score = 0;
+		
+		if (search_list.size() >= state.getkLength()-1)
+		{
+			for (int item: search_list)
 			{
-				if (score == state.getkLength() - 1)
+				if (item == 0)
 				{
-					//System.out.println("Found win condition for " + current_player);
-					score = 1000*state.getkLength();
+					score += 1;
 				}
-				return score;
+				else
+				{
+					score += 2;
+				}
 			}
 		}
-		return 0;
+		return score;
 	}
-
 }
 	
 	

@@ -61,6 +61,7 @@ public class FrAInkensteinNode
 	public void setValue(int new_value)
 	{
 		value = new_value;
+		//System.out.println("Set Value: " + value);
 	}
 	
 	public void addChild (FrAInkensteinNode new_child)
@@ -70,31 +71,47 @@ public class FrAInkensteinNode
 			if (children[i] == null)
 			{
 				children[i] = new_child;
+				return;
 			}
 		}
 	}
 	
+	public String printBoard(FrAInkensteinNode node)
+	{
+		String output = "----------------\n";
+		for (int i = node.getState().getHeight()-1; i > -1; i--)
+		{
+			for (int j = 0; j < node.getState().getWidth(); j++)
+			{
+				output += node.getState().getSpace(j, i);
+			}
+			output += '\n';
+		}
+		output += "----------------\n";
+		return output;
+	}
+	
 	public void printTree(FrAInkensteinNode node, int depth, int depth_limit)
 	{
-		System.out.println("-----------------------");
-		for (FrAInkensteinNode child: node.children)
+		System.out.println("-----------------------DEPTH: " + depth);
+		for (int i = node.getChildren().length -1; i > -1; i--)
 		{
-			if (node == null)
+			if (node.getChildren()[i] == null)
 			{
 				System.out.println("NULL NODE");
 			}
-			for (int col = node.state.getHeight()-1; col > -1; col--)
+			for (int col = node.getChildren()[i].state.getHeight()-1; col > -1; col--)
 			{
-				for (int row = node.state.getWidth()-1; row > -1; row--)
+				for (int row = 0; row < node.getChildren()[i].state.getWidth(); row++)
 				{
-					System.out.print(node.state.getSpace(row, col));
+					System.out.print(node.getChildren()[i].state.getSpace(row, col));
 				}
 				System.out.println();
 			}
 			System.out.println();
 			if (depth < depth_limit)
 			{
-				printTree(node, depth+1, depth_limit);
+				printTree(node.getChildren()[i], depth+1, depth_limit);
 			}
 		}
 	}
