@@ -173,7 +173,7 @@ public class FrAInkenstienAI extends CKPlayer {
 //		}
 		
 		int max_val = Integer.MIN_VALUE;
-		
+		int max_child = 0;
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
@@ -185,13 +185,14 @@ public class FrAInkenstienAI extends CKPlayer {
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_child = child;
 			}
 			if (alpha >= beta)
 			{
 				return Integer.MAX_VALUE;
 			}
 		}
-		return max_val;
+		return max_child;
 	}
 	
 	private int ABminValue (FrAInkensteinNode node, int alpha, int beta, int depth, int depth_limit, long stop_time)
@@ -206,6 +207,7 @@ public class FrAInkenstienAI extends CKPlayer {
 //		}
 		
 		int max_val = Integer.MIN_VALUE;
+		int max_child = 0;
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
@@ -217,13 +219,14 @@ public class FrAInkenstienAI extends CKPlayer {
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_child = child;
 			}
 			if (alpha >= beta)
 			{
 				return Integer.MIN_VALUE;
 			}
 		}
-		return max_val;
+		return max_child;
 	}
 	
 	private FrAInkensteinNode minmaxSearch(FrAInkensteinNode node, int depth_limit, long stop_time)

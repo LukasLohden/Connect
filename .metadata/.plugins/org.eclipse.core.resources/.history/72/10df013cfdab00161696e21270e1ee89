@@ -167,13 +167,12 @@ public class FrAInkenstienAI extends CKPlayer {
 		{
 			return heuristic(node.getState());
 		}
-//		if (terminal(node.getState()))
-//		{
-//			return heuristic(node.getState());
-//		}
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
 		
 		int max_val = Integer.MIN_VALUE;
-		
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
@@ -185,6 +184,7 @@ public class FrAInkenstienAI extends CKPlayer {
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_val = child;
 			}
 			if (alpha >= beta)
 			{
@@ -200,10 +200,10 @@ public class FrAInkenstienAI extends CKPlayer {
 		{
 			return heuristic(node.getState());
 		}
-//		if (terminal(node.getState()))
-//		{
-//			return heuristic(node.getState());
-//		}
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
 		
 		int max_val = Integer.MIN_VALUE;
 		
@@ -217,6 +217,7 @@ public class FrAInkenstienAI extends CKPlayer {
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_val = child;
 			}
 			if (alpha >= beta)
 			{
@@ -335,7 +336,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		int ai_score = 0; 
 		int op_score = 0;
 		
-		// Print Heuristic Values here V
+		// Print Heuristic Valiues here V
 		for (int row = 0; row < state.getHeight(); row++)
 		{
 			for (int col = 0; col < state.getWidth(); col++)

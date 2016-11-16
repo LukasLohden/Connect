@@ -7,6 +7,19 @@
       "micro": 0,
       "qualifier": ""
     },
+    "jarFileFingerprint": "8f64d258112245e151d6fd0e01fc0b44f89007a3",
+    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
+    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/charsets.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
     "jarFileFingerprint": "29820464260229b133c39965832ec39ba1b5e363",
     "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
     "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar",
@@ -33,9 +46,9 @@
       "micro": 0,
       "qualifier": ""
     },
-    "jarFileFingerprint": "e419f43adbb708e506a5fe944216ee78168a9a00",
-    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
-    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext/jaccess.jar",
+    "jarFileFingerprint": "2b0e530584e2ad617e56b7c61ce96f11abdd8c1c",
+    "jarFileModificationDate": "2016-08-03T20:21:00-07:00",
+    "location": "/System/Library/Java/Extensions/MRJToolkit.jar",
     "javaRuntime": true
   },
   {
@@ -46,9 +59,48 @@
       "micro": 0,
       "qualifier": ""
     },
-    "jarFileFingerprint": "a85d5af49e138a0adefc26bf22d2cfc8c754e6dd",
-    "jarFileModificationDate": "2013-08-07T19:11:25-07:00",
-    "location": "/System/Library/Java/Extensions/jai_codec.jar",
+    "jarFileFingerprint": "e419f43adbb708e506a5fe944216ee78168a9a00",
+    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
+    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext/jaccess.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "org.slf4j.slf4j-simple",
+    "version": {
+      "major": 1,
+      "minor": 7,
+      "micro": 21,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "aae4ec6f71531843c18c57bf43a2348e8be4a18f",
+    "jarFileModificationDate": "2016-09-30T12:43:52-07:00",
+    "location": "/Users/Lukas/Google Drive/Education/UC Irvine/ICS 171/ConnectK-FQ2016_STABLE/ConnectKSource_java/Libs/ConnectK_1.8.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "58b95b2da2ea5a049b31647cdcd59539ae1240a4",
+    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
+    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jce.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "2b027a502a5a208b60a27ab2f5a5c6888490b7c8",
+    "jarFileModificationDate": "2015-10-06T16:20:47-07:00",
+    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/rt.jar",
     "javaRuntime": true
   },
   {
@@ -78,6 +130,19 @@
     "javaRuntime": false
   },
   {
+    "symbolicName": "slf4j.api",
+    "version": {
+      "major": 1,
+      "minor": 7,
+      "micro": 21,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "081fd4ad622f032af32378b2f229f5efc5ed1ce8",
+    "jarFileModificationDate": "2016-09-30T12:43:52-07:00",
+    "location": "/Users/Lukas/Google Drive/Education/UC Irvine/ICS 171/ConnectK-FQ2016_STABLE/ConnectKSource_java/Libs/slf4j-api-1.7.21.jar",
+    "javaRuntime": false
+  },
+  {
     "symbolicName": "jre",
     "version": {
       "major": 1,
@@ -98,23 +163,23 @@
       "micro": 0,
       "qualifier": ""
     },
-    "jarFileFingerprint": "f0175c4c28f08b9236108499c33d6542c0bcd8b4",
-    "jarFileModificationDate": "2013-08-07T19:15:41-07:00",
-    "location": "/System/Library/Java/Extensions/j3daudio.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
     "jarFileFingerprint": "f752f773e484bdab9b0df566bbb1d197e674e8d2",
     "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
     "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext/localedata.jar",
     "javaRuntime": true
+  },
+  {
+    "symbolicName": "slf4j.api",
+    "version": {
+      "major": 1,
+      "minor": 7,
+      "micro": 21,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "081fd4ad622f032af32378b2f229f5efc5ed1ce8",
+    "jarFileModificationDate": "2016-09-30T12:43:52-07:00",
+    "location": "/Users/Lukas/Documents/ICS 171 AI Project/Connect/Libs/slf4j-api-1.7.21.jar",
+    "javaRuntime": false
   },
   {
     "symbolicName": "jre",
@@ -130,6 +195,19 @@
     "javaRuntime": true
   },
   {
+    "symbolicName": "slf4j.simple",
+    "version": {
+      "major": 1,
+      "minor": 7,
+      "micro": 21,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "4edef416c608a817e3bc56fd192eceea3fc5f77f",
+    "jarFileModificationDate": "2016-09-30T12:43:52-07:00",
+    "location": "/Users/Lukas/Google Drive/Education/UC Irvine/ICS 171/ConnectK-FQ2016_STABLE/ConnectKSource_java/Libs/slf4j-simple-1.7.21.jar",
+    "javaRuntime": false
+  },
+  {
     "symbolicName": "jre",
     "version": {
       "major": 1,
@@ -140,6 +218,19 @@
     "jarFileFingerprint": "30ce32542a0676a22019407d28d0cf449e7ed58b",
     "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
     "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/resources.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "ea620a443dec1765d9cf46a99897aaa52c380f2d",
+    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
+    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jsse.jar",
     "javaRuntime": true
   },
   {
@@ -176,178 +267,9 @@
       "micro": 0,
       "qualifier": ""
     },
-    "jarFileFingerprint": "8f64d258112245e151d6fd0e01fc0b44f89007a3",
-    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
-    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/charsets.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "e7533ef29283d456ddcc700ad2ccdd0c3452e464",
-    "jarFileModificationDate": "2013-08-07T19:15:41-07:00",
-    "location": "/System/Library/Java/Extensions/j3dutils.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "63fbdd9c7e93573cc15ee487950217886be2aef6",
-    "jarFileModificationDate": "2013-08-07T19:15:03-07:00",
-    "location": "/System/Library/Java/Extensions/dns_sd.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "9c41c0dac908567ea498f1072fb54cd6aa4712f4",
-    "jarFileModificationDate": "2013-11-05T13:57:02-08:00",
-    "location": "/System/Library/Java/Extensions/MRJToolkit.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "58b95b2da2ea5a049b31647cdcd59539ae1240a4",
-    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
-    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jce.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "2b027a502a5a208b60a27ab2f5a5c6888490b7c8",
-    "jarFileModificationDate": "2015-10-06T16:20:47-07:00",
-    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/rt.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "21240ab7c12f378058cbb7a9b2f5b762dd30e1b8",
-    "jarFileModificationDate": "2013-08-07T19:11:25-07:00",
-    "location": "/System/Library/Java/Extensions/jai_core.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "005810d865dab9bd200ea485d0e44c18a329aa26",
-    "jarFileModificationDate": "2013-08-07T19:15:41-07:00",
-    "location": "/System/Library/Java/Extensions/vecmath.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "c5d7b7bfab9b433c4b62aebbe76a564b6bcf8192",
-    "jarFileModificationDate": "2013-08-07T19:11:00-07:00",
-    "location": "/System/Library/Java/Extensions/mlibwrapper_jai.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "slf4j.api",
-    "version": {
-      "major": 1,
-      "minor": 7,
-      "micro": 21,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "081fd4ad622f032af32378b2f229f5efc5ed1ce8",
-    "jarFileModificationDate": "2016-09-30T12:43:52-07:00",
-    "location": "/Users/Lukas/Documents/ICS 171 AI Project/Connect/Libs/slf4j-api-1.7.21.jar",
-    "javaRuntime": false
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "51dbde992ee8e0ee2e9e1be38fcc6d3295ebc66e",
-    "jarFileModificationDate": "2013-08-07T19:16:58-07:00",
-    "location": "/System/Library/Java/Extensions/AppleScriptEngine.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "ea620a443dec1765d9cf46a99897aaa52c380f2d",
-    "jarFileModificationDate": "2015-10-06T16:20:46-07:00",
-    "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jsse.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
     "jarFileFingerprint": "d2716239efce236bac6887a73d90905e01e7134e",
     "jarFileModificationDate": "2015-10-06T13:59:18-07:00",
     "location": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext/jfxrt.jar",
-    "javaRuntime": true
-  },
-  {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "06b897f357f111e205017803b1d10f972e8f1075",
-    "jarFileModificationDate": "2013-08-07T19:15:41-07:00",
-    "location": "/System/Library/Java/Extensions/j3dcore.jar",
     "javaRuntime": true
   },
   {

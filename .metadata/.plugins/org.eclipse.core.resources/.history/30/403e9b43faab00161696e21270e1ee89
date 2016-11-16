@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FrAInkenstienAI extends CKPlayer {
 
-
+	int depth_limit;
 	int opponent;
 	int ai_player;
 	
@@ -16,6 +16,7 @@ public class FrAInkenstienAI extends CKPlayer {
 	{
 		super(player, state);
 		teamName = "FrAInkenstein";
+		depth_limit = state.gravityEnabled() ? 3 : 2;
 		ai_player = player;
 		
 		if (player == 1)
@@ -42,49 +43,31 @@ public class FrAInkenstienAI extends CKPlayer {
 		FrAInkensteinNode tree = new FrAInkensteinNode(state);
 		FrAInkensteinNode best_node = tree;
 		
-		int limit = 1;
-		Point best_move = null;
+		expandTree(tree, 0, stop_time, ai_player);
+		//tree.printTree(tree, 0, 3);
 		
-		while (/*System.currentTimeMillis() < stop_time &&*/ limit <= state.spacesLeft)
-		{
-			expandTree(tree, 0, limit, stop_time, ai_player);
-			//tree.printTree(tree, 0, 3);
+		//BoardModel next_state = minmaxSearch(tree, stop_time).getState();
+		BoardModel next_state = alphabetaSearch(tree, stop_time).getState();
 		
-			if (/*System.currentTimeMillis() < stop_time &&*/ limit <= state.spacesLeft)
-			{
-				// MIN-MAX Search
-				//BoardModel next_state = minmaxSearch(tree, limit, stop_time).getState();
-				
-				// ALPHA-BETA Search
-				BoardModel next_state = alphabetaSearch(tree, limit, stop_time).getState();
-				best_move = findMove(state, next_state);
-			}
-			else
-			{
-				break;
-			}
-			limit++;
-		}
-		
-		return best_move;
+		return findMove(state, next_state);
 	}
 	
-	private void expandTree(FrAInkensteinNode node, int depth, int depth_limit, long stop_time, int current_player)
+	private void expandTree(FrAInkensteinNode node, int depth, long stop_time, int current_player)
 	{
-		if (System.currentTimeMillis() > stop_time)
-		{
-			return;
-		}
+		// if (System.currentTimeMillis() > stop_time)
+		
 		//System.out.println("EXPANDING AT DEPTH: " + depth);
+		
 		//System.out.println(node.getState());
+		
+		
 		if (node.getState().gravityEnabled())
 		{
 			for (int col = 0; col < node.getState().getWidth(); col++)
 			{
-				if (System.currentTimeMillis() > stop_time)
-				{
-					return;
-				}
+				// if column has spaces left, play in top of column
+					// call expandTree on the new node from above play
+						// continue until I reach the max depth
 				
 				if ( (node.getState().getSpace(col, node.getState().getHeight()-1)) == 0 )
 				{
@@ -94,35 +77,35 @@ public class FrAInkenstienAI extends CKPlayer {
 					node.addChild(new_node);
 					if (depth < depth_limit)
 					{
-						expandTree(new_node, depth + 1, depth_limit, stop_time, (current_player == 1) ? 2 : 1);
+						expandTree(new_node, depth + 1, stop_time, (current_player == 1) ? 2 : 1);
 					}
 				}
 			}
 		}
+		
 		else
 		{
+			// gravity not enabled: play in every open slot in the board
+				// call expandTree on the new node from above play
+					// continue until I reach the max depth
+			
 			for (int row = 0; row < node.getState().getHeight(); row++)
 			{
-				if (System.currentTimeMillis() > stop_time)
-				{
-					return;
-				}
 				for (int col = 0; col < node.getState().getWidth(); col++)
 				{
-					if (System.currentTimeMillis() > stop_time)
-					{
-						return;
-					}
 					if (node.state.getSpace(col, row) == 0)
 					{
 						BoardModel new_board = node.getState().clone();
 						new_board = new_board.placePiece(new Point (col, row), (byte) current_player);
+						
 						//BoardModel new_board = node.getState().placePiece(new Point (col, row), (byte) current_player);
 						FrAInkensteinNode new_node = new FrAInkensteinNode(new_board);
+						
 						node.addChild(new_node);
+						
 						if (depth < depth_limit)
 						{
-							expandTree(new_node, depth + 1, depth_limit, stop_time, (current_player == 1) ? 2 : 1);
+							expandTree(new_node, depth + 1, stop_time, (current_player == 1) ? 2 : 1);
 						}	
 					}
 				}
@@ -135,7 +118,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		return (heuristic(state) == Integer.MAX_VALUE || heuristic(state) == Integer.MIN_VALUE);
 	}
 	
-	private FrAInkensteinNode alphabetaSearch(FrAInkensteinNode node, int limit, long stop_time)
+	private FrAInkensteinNode alphabetaSearch(FrAInkensteinNode node, long stop_time)
 	{
 		int alpha = Integer.MIN_VALUE;
 		int beta = Integer.MAX_VALUE;
@@ -145,11 +128,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			if (System.currentTimeMillis() > stop_time)
-			{
-				//return node.getChildren()[best_index];
-			}
-			int child_value = ABminValue(node.getChildren()[child], alpha, beta, 0, limit, stop_time);
+			int child_value = ABminValue(node.getChildren()[child], alpha, beta, 0);
 			node.getChildren()[child].setValue(child_value);
 			alpha = child_value;
 			if (child_value >= best_value)
@@ -161,30 +140,27 @@ public class FrAInkenstienAI extends CKPlayer {
 		return node.getChildren()[best_index];
 	}
 	
-	private int ABmaxValue (FrAInkensteinNode node, int alpha, int beta, int depth, int depth_limit, long stop_time)
+	private int ABmaxValue (FrAInkensteinNode node, int alpha, int beta, int depth)
 	{
 		if (depth == depth_limit)
 		{
 			return heuristic(node.getState());
 		}
-//		if (terminal(node.getState()))
-//		{
-//			return heuristic(node.getState());
-//		}
+		
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
 		
 		int max_val = Integer.MIN_VALUE;
 		
-		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			if (System.currentTimeMillis() > stop_time)
-			{
-				//return heuristic(node.getState());
-			}
-			int child_value = ABminValue(node.getChildren()[child], alpha, beta, depth + 1, depth_limit, stop_time);
+			int child_value = ABminValue(node.getChildren()[child], alpha, beta, depth + 1);
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_val = child;
 			}
 			if (alpha >= beta)
 			{
@@ -194,29 +170,27 @@ public class FrAInkenstienAI extends CKPlayer {
 		return max_val;
 	}
 	
-	private int ABminValue (FrAInkensteinNode node, int alpha, int beta, int depth, int depth_limit, long stop_time)
+	private int ABminValue (FrAInkensteinNode node, int alpha, int beta, int depth)
 	{
 		if (depth == depth_limit)
 		{
 			return heuristic(node.getState());
 		}
-//		if (terminal(node.getState()))
-//		{
-//			return heuristic(node.getState());
-//		}
+		
+		if (terminal(node.getState()))
+		{
+			return heuristic(node.getState());
+		}
 		
 		int max_val = Integer.MIN_VALUE;
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			if (System.currentTimeMillis() > stop_time)
-			{
-				//return heuristic(node.getState());
-			}
-			int child_value = ABmaxValue(node.getChildren()[child], alpha, beta, depth + 1, depth_limit, stop_time);
+			int child_value = ABmaxValue(node.getChildren()[child], alpha, beta, depth + 1);
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_val = child;
 			}
 			if (alpha >= beta)
 			{
@@ -226,14 +200,14 @@ public class FrAInkenstienAI extends CKPlayer {
 		return max_val;
 	}
 	
-	private FrAInkensteinNode minmaxSearch(FrAInkensteinNode node, int depth_limit, long stop_time)
+	private FrAInkensteinNode minmaxSearch(FrAInkensteinNode node, long stop_time)
 	{
 		int best_index = 0;
 		int best_value = Integer.MIN_VALUE;
 		//System.out.println("CHILD VALUES: ");
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			int child_value = minValue(node.getChildren()[child], 0, depth_limit);
+			int child_value = minValue(node.getChildren()[child], 0);
 			node.getChildren()[child].setValue(child_value);
 			//System.out.print(child_value + " (index: " + child+ "), ");
 			if (child_value >= best_value)
@@ -255,7 +229,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		 return node.getChildren()[best_index];
 	}
 	
-	private int maxValue(FrAInkensteinNode node, int depth, int depth_limit)
+	private int maxValue(FrAInkensteinNode node, int depth)
 	{
 		
 		if (depth == depth_limit)
@@ -274,7 +248,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			int child_value = minValue(node.getChildren()[child], depth + 1, depth_limit);
+			int child_value = minValue(node.getChildren()[child], depth + 1);
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
@@ -284,7 +258,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		return max_val;
 	}
 	
-	private int minValue(FrAInkensteinNode node, int depth, int depth_limit)
+	private int minValue(FrAInkensteinNode node, int depth)
 	{
 		
 		if (depth == depth_limit)
@@ -304,7 +278,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
-			int child_value = maxValue(node.getChildren()[child], depth + 1, depth_limit);
+			int child_value = maxValue(node.getChildren()[child], depth + 1);
 			if (child_value <= min_val)
 			{
 				min_val = child_value;
@@ -335,7 +309,7 @@ public class FrAInkenstienAI extends CKPlayer {
 		int ai_score = 0; 
 		int op_score = 0;
 		
-		// Print Heuristic Values here V
+		// Print Heuristic Valiues here V
 		for (int row = 0; row < state.getHeight(); row++)
 		{
 			for (int col = 0; col < state.getWidth(); col++)

@@ -174,7 +174,6 @@ public class FrAInkenstienAI extends CKPlayer {
 		
 		int max_val = Integer.MIN_VALUE;
 		
-		
 		for (int child = 0; child < node.getChildren().length; child++)
 		{
 			if (System.currentTimeMillis() > stop_time)
@@ -185,6 +184,7 @@ public class FrAInkenstienAI extends CKPlayer {
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_val = child;
 			}
 			if (alpha >= beta)
 			{
@@ -217,6 +217,7 @@ public class FrAInkenstienAI extends CKPlayer {
 			if (child_value >= max_val)
 			{
 				max_val = child_value;
+				max_val = child;
 			}
 			if (alpha >= beta)
 			{
